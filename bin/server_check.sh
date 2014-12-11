@@ -129,38 +129,6 @@ billing_radius_acc_netstat() {
 	netstat_check "${app['radius.ACC_IP']}:${app['radius.ACC_PORT']}"
 }
 
-billing_radius_voip_auth_netstat() {
-	. /app/asr_billing/cfg/config
-	list "Radius-voip-сервер (авторизация)"
-	daemon=radius_voip
-	[ "${app[$daemon.enabled]}" = '0' ] && echo -n "(отключен)" && return 0
-	netstat_check "${app[$daemon.AUTH_IP]}:${app[$daemon.AUTH_PORT]}"
-}
-
-billing_radius_voip_acc_netstat() {
-	. /app/asr_billing/cfg/config
-	list "Radius-voip-сервер (аккаунтинг)"
-	daemon=radius_voip
-	[ "${app[$daemon.enabled]}" = '0' ] && echo -n "(отключен)" && return 0
-	netstat_check "${app[$daemon.ACC_IP]}:${app[$daemon.ACC_PORT]}"
-}
-
-billing_radius_wimax_auth_netstat() {
-	. /app/asr_billing/cfg/config
-	list "Radius-wimax-сервер (авторизация)"
-	daemon=radius_wimax
-	[ "${app[$daemon.enabled]}" = '0' ] && echo -n "(отключен)" && return 0
-	netstat_check "${app[$daemon.AUTH_IP]}:${app[$daemon.AUTH_PORT]}"
-}
-
-billing_radius_wimax_acc_netstat() {
-	. /app/asr_billing/cfg/config
-	list "Radius-wimax-сервер (аккаунтинг)"
-	daemon=radius_wimax
-	[ "${app[$daemon.enabled]}" = '0' ] && echo -n "(отключен)" && return 0
-	netstat_check "${app[$daemon.ACC_IP]}:${app[$daemon.ACC_PORT]}"
-}
-
 bstat_check_raw_stat() {
 	list "Наличие сырой статистики: "
 	[ $(find /app/collector/var/stat/raw/ -type f | wc -l) != '0' ]
