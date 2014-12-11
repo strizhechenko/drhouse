@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo
+sed -e 's/^/    /g'
+echo
