@@ -1,0 +1,19 @@
+#/bin/bash
+
+INFO=/app/base/var/carbon_debug/$(date +%Y.%m.%d_%H:%m:%S)
+
+mkdir -p $INFO
+
+/app/base/usr/local/bin/server_check.sh plaintext > $INFO/server_check &
+ip -s -s link > $INFO/ip_link
+ip addr > $INFO/ip_addr
+arp -n > $INFO/arp_n
+ps aux > $INFO/ps_aux
+top -n 1 -b > $INFO/top
+chroot /app/xge/ iptables-save > $INFO/iptables_save
+chroot /app/xge/ ipset -o save -l > $INFO/ipset
+uptime > $INFO/uptime
+uname -a > $INFO/uname
+lsmod > $INFO/lsmod
+cat /proc/cmdline > $INFO/cmdline
+wait
