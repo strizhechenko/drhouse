@@ -87,31 +87,6 @@ disk_usage() {
 	return 0
 }
 
-netstat_check() {
-	netstat -lnp | grep -qw "$1"
-}
-
-
-auth_httpd_netstat() {
-	. /app/auth/cfg/config
-	list "Веб-сервер системы авторизации:"
-	netstat_check "${app['apache.ip']}:${app['apache.port']}"
-}
-
-
-
-billing_httpd_netstat() {
-	. /app/asr_billing/cfg/config
-	list "Веб-интерфейс биллинга:"
-	netstat_check "${app['apache.ip']}:${app['apache.port']}"
-}
-
-base_httpd_netstat() {
-	. /app/base/cfg/config
-	list "Базовый httpd:"
-	netstat_check "${app['apache.ip']}:${app['apache.port']}"
-}
-
 cabinet_httpd_netstat() {
 	. /app/asr_cabinet/cfg/config
 	list "HTTPD личного кабинета:"
@@ -364,22 +339,6 @@ server_state() {
 	return 0
 }
 
-auth() {
-	h1 "Система авторизации"
-	run_test auth_httpd_netstat
-	run_test check_chroot_dns auth
-	return 0
-}
-
-base() {
-	h1 "Базовая система"
-	run_test base_httpd_netstat
-	run_test iptables_rules_count
-	run_test mail_server_listen
-	run_test kernel_versions
-	return 0
-}
-
 billing() {
 	h1 "Биллинг"
 	run_test billing_httpd_netstat
@@ -461,7 +420,6 @@ run_custom() {
 main() {
 	run_custom $@
 	check_app auth
-	check_app base
 	check_app billing
 	check_app cabinet
 	check_app collector
