@@ -161,18 +161,6 @@ billing_radius_wimax_acc_netstat() {
 	netstat_check "${app[$daemon.ACC_IP]}:${app[$daemon.ACC_PORT]}"
 }
 
-billing_radius_traf_auth_netstat() {
-	. /app/asr_billing/cfg/config
-	list "Radius-traf-сервер (авторизация)"
-	netstat_check "${app['radius_traf.AUTH_IP']}:${app['radius_traf.AUTH_PORT']}"
-}
-
-billing_radius_traf_acc_netstat() {
-	. /app/asr_billing/cfg/config
-	list "Radius-traf-сервер (аккаунтинг)"
-	netstat_check "${app['radius_traf.ACC_IP']}:${app['radius_traf.ACC_PORT']}"
-}
-
 bstat_check_raw_stat() {
 	list "Наличие сырой статистики: "
 	[ $(find /app/collector/var/stat/raw/ -type f | wc -l) != '0' ]
