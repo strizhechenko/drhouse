@@ -1,0 +1,46 @@
+#!/bin/bash
+
+. ./lib/drhouse.conf
+
+TMPDIR=/tmp/drhouse
+
+list_of_executable() {
+	case $(uname) in
+		Linux )
+			find "$1" -d 1 -type f -executable
+			;;
+		Darwin )
+			find "$1" -d 1 -type f -perm +o+x
+			;;
+	esac
+}
+
+show_output() {
+	echo
+	sed -e 's/^/    /g' $1
+	echo
+}
+
+main() {
+	mkdir -p $TMPDIR
+	rm -rf $TMPDIR/*
+	for testset in $(find $TESTPATH -d 1 -type d); do
+		for TEST in $(list_of_executable $testset); do
+			TEST=${TEST//\/\//\/}
+			TESTDIR="${TEST%/*}"
+			TESTFILE="${TEST##*/}"
+			OUTPUT=$TMPDIR/$TESTFILE.output
+			retval=0
+			$TEST &>"$OUTPUT" || retval=$?
+			echo -n "$TESTDIR $TESTFILE: "
+			if [ "$retval" = '0' ]; then
+				echo '[ OK ]'
+				continue
+			fi
+			echo "ERROR($retval)"
+			show_output "$OUTPUT"
+		done
+	done
+}
+
+main
