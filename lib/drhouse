@@ -1,0 +1,29 @@
+#!/bin/bash
+
+error() {
+	log "Обнаружена ошибка в тесте $0"
+}
+
+fix() {
+	return 1
+}
+
+fix_ok() {
+	log "Исправление удалось"
+}
+
+drhouse_main_nosafemode() {
+	check && exit 0 || error
+	fix && fix_ok || exit 1
+	check && exit 0 || exit 2
+}
+
+drhouse_main() {
+	check && exit 0 || error
+	fix && fix_ok || exit 254
+	check && exit 0 || exit 254
+}
+
+if [ $# = 1 ] && fgrep -q "$1() {" "$BASH_SOURCE"; then
+	"$1"
+fi
