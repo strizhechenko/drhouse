@@ -100,18 +100,6 @@ auth_httpd_netstat() {
 
 
 
-billing_httpd_netstat() {
-	. /app/asr_billing/cfg/config
-	list "Веб-интерфейс биллинга:"
-	netstat_check "${app['apache.ip']}:${app['apache.port']}"
-}
-
-base_httpd_netstat() {
-	. /app/base/cfg/config
-	list "Базовый httpd:"
-	netstat_check "${app['apache.ip']}:${app['apache.port']}"
-}
-
 cabinet_httpd_netstat() {
 	. /app/asr_cabinet/cfg/config
 	list "HTTPD личного кабинета:"
