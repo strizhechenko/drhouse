@@ -234,75 +234,6 @@ iptables_rules_count() {
 	[ "$count" -le "$maxcount" ]
 }
 
-nf_collector_listen() {
-	list "Приём netflow:"
-	netstat_check nf_collector
-}
-
-mail_server_listen() {
-	list "Почтовый сервер запущен:"
-	netstat_check "\d*.\d*.\d*.\d*:25"
-}
-
-check_chroot_dns() {
-	list "Проверка работы DNS:"
-	chroot /app/$1 nslookup -timeout=1 ya.ru &>/dev/null
-}
-
-kernel_versions() {
-	list "Соответствие версий ядра и модулей"
-	dmesg | grep -q 'FATAL: Could not load /lib/modules' && return 1
-	dmesg | grep -q 'ip_tables: Unknown symbol' && return 1
-	dmesg | grep -q 'ip_tables: disagrees about version of symbol' && return 1
-	return 0
-}
-
-xge_httpd_internal_netstat() {
-	. /app/xge/cfg/config
-	list "Внутренний веб-сервер XGE"
-        netstat_check "${httpd['internal_ip']}:80"
-}
-
-xge_httpd_redirect_netstat() {
-	. /app/xge/cfg/config
-	list "Веб-сервер для редиректа на отрицательный баланс"
-	netstat_check "${httpd['internal_ip']}:442"
-}
-
-xge_httpd_redirect_noauth_netstat() {
-	. /app/xge/cfg/config
-	list "Веб-сервер для редиректа на авторизацию (Web + IP)"
-	netstat_check "${httpd['internal_ip']}:440"
-}
-
-
-#xge_httpd_redirect_webauth_netstat() {
-#	. /app/xge/cfg/config
-#	list "Веб-сервер для редиректа на Web+login+pass авторизацию"
-#	netstat_check "${httpd['redirect_webauth_ip']}:80"
-#}
-
-xge_imq_device_count() {
-	list "Количество IMQ-девайсов"
-	[ "$(ip l | grep imq | wc -l)" = '2' ]
-}
-
-xge_pptp_server_netstat() {
-	list "PPTP-сервер"
-	netstat_check 0.0.0.0:1723
-}
-
-xge_l2tp_server_netstat() {
-	list "L2TP-сервер"
-	netstat_check 0.0.0.0:1701
-}
-
-xge_coa_radius_netstat() {
-	. /app/xge/cfg/config
-	list "Radius-сервер"
-	netstat_check "${radclient['nas_identifier']}:${radclient['coa_server.port']}"
-}
-
 xge_session_count() {
 	list "Количество пользовательских сессий: "
 	count="$(chroot /app/xge/ /usr/local/bin/xgesh session list | grep -cv '^$')"
@@ -416,7 +347,6 @@ xge() {
 	run_test xge_httpd_internal_netstat
 	run_test xge_httpd_redirect_netstat
 	run_test xge_httpd_redirect_noauth_netstat
-#	run_test xge_httpd_redirect_webauth_netstat
 	run_test xge_imq_device_count
 	run_test xge_pptp_server_netstat
 	run_test xge_l2tp_server_netstat
@@ -427,8 +357,6 @@ xge() {
 	run_test xge_radius_coa_ping
 	run_test xge_netflow_collector_ping
 	run_test check_chroot_dns xge
-	#TODO run_test xge_radclient_to_auth
-	#TODO run_test xge_radclient_to_acct
 	return 0
 }
 
