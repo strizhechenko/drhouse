@@ -270,33 +270,6 @@ fiscal() {
 	return 0
 }
 
-collector() {
-	h1 "Система сбора статистики"
-	run_test bstat_check_raw_stat
-	run_test nf_collector_listen
-	run_test check_chroot_dns collector
-	run_test check_critical_traf_reporter
-	return 0
-}
-
-xge() {
-	h1 "XGE Router 5"
-	run_test xge_httpd_internal_netstat
-	run_test xge_httpd_redirect_netstat
-	run_test xge_httpd_redirect_noauth_netstat
-	run_test xge_imq_device_count
-	run_test xge_pptp_server_netstat
-	run_test xge_l2tp_server_netstat
-	run_test xge_coa_radius_netstat
-	run_test xge_session_count
-	run_test xge_radius_auth_ping
-	run_test xge_radius_acct_ping
-	run_test xge_radius_coa_ping
-	run_test xge_netflow_collector_ping
-	run_test check_chroot_dns xge
-	return 0
-}
-
 check_app() {
 	[ -f /app/$1/cfg/config -o -f /app/asr_$1/cfg/config -o "$1" = 'server_state' ] || return 0
 	$1
