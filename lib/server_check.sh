@@ -198,11 +198,6 @@ billing_radius_traf_acc_netstat() {
 	netstat_check "${app['radius_traf.ACC_IP']}:${app['radius_traf.ACC_PORT']}"
 }
 
-bstat_check_raw_stat() {
-	list "Наличие сырой статистики: "
-	[ $(find /app/collector/var/stat/raw/ -type f | wc -l) != '0' ]
-}
-
 inet_access() {
 	list "Доступ к сети"
 	ping -c 1 8.8.8.8 &>/dev/null
@@ -226,14 +221,6 @@ check_critical_worker() {
 	list "Критические ошибки в логе worker за последний час: "
 	maxcount=0
 	count=$(grep -w "$(date  "+%Y-%m-%d %H").*CRITICAL" /app/asr_billing/var/log/worker.log | wc -l)
-	echo -n "$count"
-	[ "$count" -le "$maxcount" ]
-}
-
-check_critical_traf_reporter() {
-	list "Ошибки в логе traf-reporter за последний час: "
-	maxcount=0
-	count=$(grep -w "$(date  "+%Y-%m-%d %H").*ERROR" /app/collector/var/log/reporter.log | wc -l)
 	echo -n "$count"
 	[ "$count" -le "$maxcount" ]
 }
@@ -460,9 +447,6 @@ run_custom() {
 
 main() {
 	run_custom $@
-	check_app auth
-	check_app base
-	check_app billing
 	check_app cabinet
 	check_app collector
 	check_app fiscal

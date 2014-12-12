@@ -2,6 +2,8 @@
 
 . ./lib/drhouse.conf
 
+export PATH=$PATH:./bin/
+
 TMPDIR=/tmp/drhouse
 
 list_of_executable() {
@@ -25,6 +27,7 @@ main() {
 	mkdir -p $TMPDIR
 	rm -rf $TMPDIR/*
 	for testset in $(find $TESTPATH -d 1 -type d); do
+		echo "# ${testset##*/}"
 		for TEST in $(list_of_executable $testset); do
 			TEST=${TEST//\/\//\/}
 			TESTDIR="${TEST%/*}"
@@ -32,7 +35,7 @@ main() {
 			OUTPUT=$TMPDIR/$TESTFILE.output
 			retval=0
 			$TEST &>"$OUTPUT" || retval=$?
-			echo -n "$TESTDIR $TESTFILE: "
+			echo -n "## $TESTFILE: "
 			if [ "$retval" = '0' ]; then
 				echo '[ OK ]'
 				continue
