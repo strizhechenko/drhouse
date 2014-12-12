@@ -6,7 +6,7 @@ check() {
 }
 
 error() {
-	log "Сервер аккаунтинга ${radclient['coa_client.ip']%%:*} недоступен"
+	log "Radius-клиент (биллинг) ${radclient['coa_client.ip']%%:*} недоступен"
 }
 
 . ./lib/drhouse drhouse_main_nosafemode
