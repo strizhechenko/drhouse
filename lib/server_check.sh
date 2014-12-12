@@ -100,12 +100,6 @@ auth_httpd_netstat() {
 
 
 
-cabinet_httpd_netstat() {
-	. /app/asr_cabinet/cfg/config
-	list "HTTPD личного кабинета:"
-	netstat_check "${app['apache.ip']}:${app['apache.port']}"
-}
-
 fiscal_httpd_netstat() {
 	. /app/asr_fiscal/cfg/config
 	list "HTTPD платёжных систем (http):"
@@ -116,12 +110,6 @@ fiscal_httpd_ssl_netstat() {
 	. /app/asr_fiscal/cfg/config
 	list "HTTPD платёжных систем (https):"
 	netstat_check "${app['apache.sslip']}:${app['apache.sslport']}"
-}
-
-cabinet_httpd_negbal_netstat() {
-	. /app/asr_cabinet/cfg/config
-	list "HTTPD личного кабинета (отрицательный баланс):"
-	netstat_check "${app['apache.negbalip']}:${app['apache.negbalport']}"
 }
 
 cabinet_httpd_speedlimit_netstat() {

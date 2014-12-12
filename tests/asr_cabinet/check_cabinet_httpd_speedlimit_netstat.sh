@@ -1,9 +1,16 @@
 #!/bin/bash
 
 check() {
+	. /cfg/config
+	check_netstat "${app['apache.speedlimitip']}:${app['apache.speedlimitport']}"
 }
 
 error() {
+	log "Доступность страницы speedlimit"
 }
 
-. ./lib/drhouse drhouse_main
+fix() {
+	/etc/init.d/httpd restart
+}
+
+. ./lib/drhouse drhouse_main_nosafemode
