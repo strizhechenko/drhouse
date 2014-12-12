@@ -241,35 +241,6 @@ xge_session_count() {
 	[ "$count" != '0' -a "$count" -lt "1000000" ]
 }
 
-xge_radius_auth_ping() {
-	. /app/xge/cfg/config
-	list "Ping-доступность radius auth ${radclient['authserver']%%:*}"
-	ping -qc 1 -w 1 "${radclient['authserver']%%:*}" &>/dev/null
-}
-
-xge_radius_acct_ping() {
-	. /app/xge/cfg/config
-	list "Ping-доступность radius acct ${radclient['acctserver']%%:*}"
-	ping -qc 1 -w 1 "${radclient['acctserver']%%:*}" &>/dev/null
-}
-
-xge_radius_coa_ping() {
-	. /app/xge/cfg/config
-	list "Ping-доступность radius coa-клиента ${radclient['coa_client.ip']}"
-	ping -qc 1 -w 1 "${radclient['coa_client.ip']}" &>/dev/null
-}
-
-xge_netflow_collector_ping() {
-	. /app/xge/cfg/config
-	list "Ping-доступность netflow коллектора ${nfusens['collector']%%:*}"
-	ping -qc 1 -w 1 "${nfusens['collector']%%:*}" &>/dev/null
-}
-
-xge_duplicate_class_id() {
-	list "Дублирование класса шейперов"
-	! chroot /app/xge/ /usr/local/bin/xgesh session dump | cut -d ' ' -f7 | sort | uniq -d | tee -a /dev/stderr | grep -q ''
-}
-
 server_state() {
 	h1 "Состояние сервера"
 	run_test freemem_check
@@ -279,40 +250,6 @@ server_state() {
 	run_test file_perms
 	run_test swap_enabled
 	run_test free_inodes
-	return 0
-}
-
-auth() {
-	h1 "Система авторизации"
-	run_test auth_httpd_netstat
-	run_test check_chroot_dns auth
-	return 0
-}
-
-base() {
-	h1 "Базовая система"
-	run_test base_httpd_netstat
-	run_test iptables_rules_count
-	run_test mail_server_listen
-	run_test kernel_versions
-	return 0
-}
-
-billing() {
-	h1 "Биллинг"
-	run_test billing_httpd_netstat
-	run_test billing_radius_auth_netstat
-	run_test billing_radius_acc_netstat
-	run_test billing_radius_voip_auth_netstat
-	run_test billing_radius_voip_acc_netstat
-	run_test billing_radius_wimax_auth_netstat
-	run_test billing_radius_wimax_acc_netstat
-	run_test billing_radius_traf_auth_netstat
-	run_test billing_radius_traf_acc_netstat
-	run_test billing_db_size
-	run_test traffic_db_size
-	run_test check_chroot_dns asr_billing
-	run_test check_critical_worker
 	return 0
 }
 
