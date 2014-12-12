@@ -112,12 +112,6 @@ fiscal_httpd_ssl_netstat() {
 	netstat_check "${app['apache.sslip']}:${app['apache.sslport']}"
 }
 
-cabinet_httpd_speedlimit_netstat() {
-	. /app/asr_cabinet/cfg/config
-	list "HTTPD личного кабинета (ограничение скорости):"
-	netstat_check "${app['apache.speedlimitip']}:${app['apache.speedlimitport']}"
-}
-
 billing_radius_auth_netstat() {
 	. /app/asr_billing/cfg/config
 	list "Radius-сервер (авторизация)"
@@ -226,15 +220,6 @@ server_state() {
 	run_test file_perms
 	run_test swap_enabled
 	run_test free_inodes
-	return 0
-}
-
-cabinet() {
-	h1 "Личный кабинет"
-	run_test cabinet_httpd_netstat
-	run_test cabinet_httpd_negbal_netstat
-	run_test cabinet_httpd_speedlimit_netstat
-	run_test check_chroot_dns asr_cabinet
 	return 0
 }
 
