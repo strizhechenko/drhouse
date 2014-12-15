@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export PATH=$PATH:./bin/
-export TESTPATH=./tests/
+export TESTPATH=/usr/local/tests_drhouse/
 export TMPDIR=/tmp/drhouse/
 
 list_of_executable() {
@@ -15,32 +15,23 @@ list_of_executable() {
 	esac
 }
 
-show_output() {
-	echo
-	sed -e 's/^/    /g' $1
-	echo
-}
-
 main() {
 	mkdir -p $TMPDIR
 	rm -rf $TMPDIR/*
-	for testset in $(find $TESTPATH -mindepth 1 -maxdepth 1 -type d); do
-		echo "# ${testset##*/}"
-		for TEST in $(list_of_executable $testset); do
-			TEST=${TEST//\/\//\/}
-			TESTDIR="${TEST%/*}"
-			TESTFILE="${TEST##*/}"
-			OUTPUT=$TMPDIR/$TESTFILE.output
-			retval=0
-			$TEST &>"$OUTPUT" || retval=$?
-			echo -n "## $TESTFILE: "
-			if [ "$retval" = '0' ]; then
-				echo '[ OK ]'
-				continue
-			fi
-			echo "ERROR($retval)"
-			show_output "$OUTPUT"
-		done
+	for TEST in $(list_of_executable $TESTPATH); do
+		TESTFILE="${TEST##*/}"
+		OUTPUT=$TMPDIR/$TESTFILE.output
+		retval=0
+		$TEST &>"$OUTPUT" || retval=$?
+		echo -n "## $TESTFILE: "
+		if [ "$retval" = '0' ]; then
+			echo '[ OK ]'
+			continue
+		fi
+		echo "ERROR($retval)"
+		echo
+		sed -e 's/^/    /g' "$OUTPUT"
+		echo
 	done
 }
 
