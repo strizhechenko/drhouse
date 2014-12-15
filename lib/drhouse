@@ -1,7 +1,7 @@
 #!/bin/bash
 
 log() {
-	echo "$(date +"%Y-%m-%d %H:%M:%S") $HOSTNAME ${0##*/}[$$]: $@"
+	echo "$(date +"%Y-%m-%d %H:%M:%S") [$$] $@"
 }
 
 if ! set | grep '^error ()' >/dev/null; then

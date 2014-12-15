@@ -2,6 +2,8 @@
 
 . /etc/init.d/functions
 
+[ "$1" = 'plaintext' ] && SETCOLOR_SUCCESS= SETCOLOR_FAILURE= SETCOLOR_WARNING= SETCOLOR_NORMAL= MOVE_TO_COL=
+
 ADD_TO_PATH=''
 [ -f /app/base/cfg/config ] && ADD_TO_PATH=/app/base
 export PATH=$PATH:$ADD_TO_PATH/usr/local/bin/
@@ -29,3 +31,4 @@ for TEST in $(find "$TESTPATH" -mindepth 1 -maxdepth 1 -type f -executable); do
 	sed -e 's/^/    /g' "$OUTPUT"
 	echo
 done
+echo
