@@ -7,39 +7,25 @@ ADD_TO_PATH=''
 export PATH=$PATH:$ADD_TO_PATH/usr/local/bin/
 export TESTPATH=$ADD_TO_PATH/usr/local/drhouse_tests/
 export TMPDIR=/tmp/drhouse/
+echo
+mkdir -p $TMPDIR
+rm -rf $TMPDIR/*
 
-list_of_executable() {
-	case $(uname) in
-		Linux )
-			find "$1" -mindepth 1 -maxdepth 1 -type f -executable
-			;;
-		Darwin )
-			find "$1" -d 1 -type f -perm +o+x
-			;;
-	esac
-}
-
-main() {
-	mkdir -p $TMPDIR
-	rm -rf $TMPDIR/*
-	for TEST in $(list_of_executable $TESTPATH); do
-		TESTFILE="${TEST##*/}"
-		OUTPUT=$TMPDIR/$TESTFILE.output
-		retval=0
-		$TEST &>"$OUTPUT" || retval=$?
-		echo -n "## $TESTFILE: "
-		if [ "$retval" = '0' ]; then
-			echo_success
-			echo
-			continue
-		fi
-		echo -n " ERROR($retval)"
-		echo_failure
+for TEST in $(find "$TESTPATH" -mindepth 1 -maxdepth 1 -type f -executable); do
+	TESTFILE="${TEST##*/}"
+	OUTPUT=$TMPDIR/$TESTFILE.output
+	retval=0
+	$TEST &>"$OUTPUT" || retval=$?
+	echo -n "- $TESTFILE: "
+	if [ "$retval" = '0' ]; then
+		echo_success
 		echo
-		echo
-		sed -e 's/^/    /g' "$OUTPUT"
-		echo
-	done
-}
-
-main
+		continue
+	fi
+	echo -n " ERROR($retval)"
+	echo_failure
+	echo
+	echo
+	sed -e 's/^/    /g' "$OUTPUT"
+	echo
+done
