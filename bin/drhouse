@@ -17,7 +17,7 @@ for TEST in $(find "$TESTS" -mindepth 1 -maxdepth 1 -type f -executable); do
 	OUTPUT=$TMPDIR/$TESTFILE.output
 	retval=0
 	$TEST &>"$OUTPUT" || retval=$?
-	markdown_list "- $TESTFILE: "
+	markdown_list "$TESTFILE: "
 	if [ "$retval" = '0' ]; then
 		echo_success
 		echo
