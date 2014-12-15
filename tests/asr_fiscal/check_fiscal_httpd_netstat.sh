@@ -6,4 +6,4 @@ check() {
 error() {
 }
 
-. ./lib/drhouse drhouse_main
+. /usr/local/lib/drhouse drhouse_main

@@ -8,4 +8,4 @@ error() {
 	log "Дублирующийся class_id у нескольких абонентов"
 }
 
-. ./lib/drhouse drhouse_main_nosafemode
+. /usr/local/lib/drhouse drhouse_main_nosafemode

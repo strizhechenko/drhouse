@@ -9,4 +9,4 @@ error() {
 	log "Netflow-коллектор недоступен."
 }
 
-. ./lib/drhouse drhouse_main_nosafemode
+. /usr/local/lib/drhouse drhouse_main_nosafemode

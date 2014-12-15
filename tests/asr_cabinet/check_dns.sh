@@ -8,4 +8,4 @@ error() {
 	log "Не настроены DNS"	
 }
 
-. ./lib/drhouse drhouse_main
+. /usr/local/lib/drhouse drhouse_main

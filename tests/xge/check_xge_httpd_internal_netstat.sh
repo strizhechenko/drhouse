@@ -9,4 +9,4 @@ error() {
 	log "Не слушает внутренний http-сервер XGE"
 }
 
-. ./lib/drhouse drhouse_main
+. /usr/local/lib/drhouse drhouse_main

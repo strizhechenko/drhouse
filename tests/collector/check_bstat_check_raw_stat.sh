@@ -8,4 +8,4 @@ error() {
 	log "Отсутствует сырая статистика"
 }
 
-. ./lib/drhouse drhouse_main_nosafemode
+. /app/base/usr/local/lib/drhouse drhouse_main_nosafemode

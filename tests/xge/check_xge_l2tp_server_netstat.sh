@@ -12,4 +12,4 @@ fix() {
 	/etc/init.d/accel-pppd restart
 }
 
-. ./lib/drhouse drhouse_main
+. /usr/local/lib/drhouse drhouse_main

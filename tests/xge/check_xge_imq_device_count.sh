@@ -8,4 +8,4 @@ error() {
 	log "Неправильное количество IMQ-девайсов"
 }
 
-. ./lib/drhouse drhouse_main
+. /usr/local/lib/drhouse drhouse_main

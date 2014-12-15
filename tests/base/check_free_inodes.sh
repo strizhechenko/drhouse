@@ -11,4 +11,4 @@ error() {
 	log "Возможно какая-то папка забита большим кол-вом файлов"
 }
 
-. ./lib/drhouse drhouse_main
+. /app/base/usr/local/lib/drhouse drhouse_main

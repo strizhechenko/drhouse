@@ -13,4 +13,4 @@ fix() {
 	/etc/init.d/radiusd restart	
 }
 
-. ./lib/drhouse drhouse_main
+. /usr/local/lib/drhouse drhouse_main
