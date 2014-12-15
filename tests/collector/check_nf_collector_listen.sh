@@ -12,4 +12,4 @@ fix() {
 	/etc/init.d/nf_collector restart	
 }
 
-. /app/base/usr/local/lib/drhouse drhouse_main_nosafemode
+. /usr/local/lib/drhouse drhouse_main_nosafemode
