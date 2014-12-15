@@ -4,17 +4,24 @@ log() {
 	echo "$(date +"%Y-%m-%d %H:%M:%S") $HOSTNAME ${0##*/}[$$]: $@"
 }
 
-error() {
-	log "Обнаружена ошибка в тесте $0"
-}
+if ! set | grep '^error ()' >/dev/null; then
+	error() {
+		log "Обнаружена ошибка в тесте $0"
+	}
+fi
 
-fix() {
-	return 1
-}
 
-fix_ok() {
-	log "Исправление удалось"
-}
+if ! set | grep '^fix ()' >/dev/null; then
+	fix() {
+		return 1
+	}
+fi
+
+if ! set | grep '^fix_ok ()' >/dev/null; then
+	fix_ok() {
+		log "Исправление удалось"
+	}
+fi
 
 drhouse_main_nosafemode() {
 	check && exit 0 || error

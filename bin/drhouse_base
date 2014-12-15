@@ -1,0 +1,38 @@
+#!/bin/bash
+
+export PATH=$PATH:/app/base/usr/local/bin/
+export TESTPATH=/app/base/usr/local/drhouse_tests/
+export TMPDIR=/tmp/drhouse/
+
+list_of_executable() {
+	case $(uname) in
+		Linux )
+			find "$1" -mindepth 1 -maxdepth 1 -type f -executable
+			;;
+		Darwin )
+			find "$1" -d 1 -type f -perm +o+x
+			;;
+	esac
+}
+
+main() {
+	mkdir -p $TMPDIR
+	rm -rf $TMPDIR/*
+	for TEST in $(list_of_executable $TESTPATH); do
+		TESTFILE="${TEST##*/}"
+		OUTPUT=$TMPDIR/$TESTFILE.output
+		retval=0
+		$TEST &>"$OUTPUT" || retval=$?
+		echo -n "## $TESTFILE: "
+		if [ "$retval" = '0' ]; then
+			echo '[ OK ]'
+			continue
+		fi
+		echo "ERROR($retval)"
+		echo
+		sed -e 's/^/    /g' "$OUTPUT"
+		echo
+	done
+}
+
+main
