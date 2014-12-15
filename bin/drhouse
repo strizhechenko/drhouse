@@ -2,8 +2,10 @@
 
 . /etc/init.d/functions
 
-export PATH=$PATH:/usr/local/bin/
-export TESTPATH=/usr/local/drhouse_tests/
+ADD_TO_PATH=''
+[ -f /app/base/cfg/config ] && ADD_TO_PATH=/app/base
+export PATH=$PATH:$ADD_TO_PATH/usr/local/bin/
+export TESTPATH=$ADD_TO_PATH/usr/local/drhouse_tests/
 export TMPDIR=/tmp/drhouse/
 
 list_of_executable() {
