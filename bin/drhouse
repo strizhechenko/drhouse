@@ -17,7 +17,7 @@ for TEST in $(find "$TESTS" -mindepth 1 -maxdepth 1 -type f -executable); do
 	OUTPUT=$TMPDIR/$TESTFILE.output
 	retval=0
 	$TEST &>"$OUTPUT" || retval=$?
-	printf -- "- $TESTFILE: "
+	markdown_list "- $TESTFILE: "
 	if [ "$retval" = '0' ]; then
 		echo_success
 		echo
@@ -25,8 +25,7 @@ for TEST in $(find "$TESTS" -mindepth 1 -maxdepth 1 -type f -executable); do
 	fi
 	printf " ERROR($retval)"
 	echo_failure
-	printf '\n\n'
-	sed -e 's/^/    /g' "$OUTPUT"
 	echo
+	markdown_code < "$OUTPUT"
 done
 echo
