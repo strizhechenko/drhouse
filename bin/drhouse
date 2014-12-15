@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. /etc/init.d/functions
+
 export PATH=$PATH:/usr/local/bin/
 export TESTPATH=/usr/local/drhouse_tests/
 export TMPDIR=/tmp/drhouse/
@@ -25,10 +27,13 @@ main() {
 		$TEST &>"$OUTPUT" || retval=$?
 		echo -n "## $TESTFILE: "
 		if [ "$retval" = '0' ]; then
-			echo '[ OK ]'
+			echo_success
+			echo
 			continue
 		fi
-		echo "ERROR($retval)"
+		echo -n " ERROR($retval)"
+		echo_failure
+		echo
 		echo
 		sed -e 's/^/    /g' "$OUTPUT"
 		echo
