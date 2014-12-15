@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PATH=$PATH:./bin/
+export PATH=$PATH:/usr/local/bin/
 export TESTPATH=/usr/local/drhouse_tests/
 export TMPDIR=/tmp/drhouse/
 
