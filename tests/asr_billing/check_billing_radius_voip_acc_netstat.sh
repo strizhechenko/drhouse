@@ -2,6 +2,7 @@
 
 check() {
 	. /cfg/config
+	[ "${app['radius_voip.enabled']}" = '0' ] && return 0
 	check_netstat "${app['radius_voip.ACC_IP']}:${app['radius_voip.ACC_PORT']}"
 }
 
