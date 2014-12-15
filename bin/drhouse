@@ -2,32 +2,30 @@
 
 . /etc/init.d/functions
 
-[ "$1" = 'plaintext' ] && SETCOLOR_SUCCESS= SETCOLOR_FAILURE= SETCOLOR_WARNING= SETCOLOR_NORMAL= MOVE_TO_COL=
+[ "$1" = 'plaintext' ] && SETCOLOR_SUCCESS= SETCOLOR_FAILURE= SETCOLOR_NORMAL= MOVE_TO_COL=
 
-ADD_TO_PATH=''
-[ -f /app/base/cfg/config ] && ADD_TO_PATH=/app/base
-export PATH=$PATH:$ADD_TO_PATH/usr/local/bin/
-export TESTPATH=$ADD_TO_PATH/usr/local/drhouse_tests/
-export TMPDIR=/tmp/drhouse/
-echo
-mkdir -p $TMPDIR
+__PATH=''
+[ -f /app/base/cfg/config ] && __PATH=/app/base
+TESTS=$__PATH/usr/local/drhouse_tests/
+export TMPDIR=/tmp/drhouse/ PATH=$PATH:$__PATH/usr/local/bin/
 rm -rf $TMPDIR/*
+mkdir -p $TMPDIR
 
-for TEST in $(find "$TESTPATH" -mindepth 1 -maxdepth 1 -type f -executable); do
+echo
+for TEST in $(find "$TESTS" -mindepth 1 -maxdepth 1 -type f -executable); do
 	TESTFILE="${TEST##*/}"
 	OUTPUT=$TMPDIR/$TESTFILE.output
 	retval=0
 	$TEST &>"$OUTPUT" || retval=$?
-	echo -n "- $TESTFILE: "
+	printf -- "- $TESTFILE: "
 	if [ "$retval" = '0' ]; then
 		echo_success
 		echo
 		continue
 	fi
-	echo -n " ERROR($retval)"
+	printf " ERROR($retval)"
 	echo_failure
-	echo
-	echo
+	printf '\n\n'
 	sed -e 's/^/    /g' "$OUTPUT"
 	echo
 done
