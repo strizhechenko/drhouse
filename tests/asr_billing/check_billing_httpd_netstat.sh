@@ -9,4 +9,4 @@ error() {
 	log "Веб-интерфейс биллинга недоступен"
 }
 
-. /usr/local/lib/drhouse drhouse_main
+. /usr/local/lib/drhouse drhouse_main_nosafemode

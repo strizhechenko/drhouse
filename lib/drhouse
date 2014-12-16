@@ -4,20 +4,24 @@ log() {
 	echo "$(date +"%Y-%m-%d %H:%M:%S") $@"
 }
 
-if ! set | grep '^error ()' >/dev/null; then
+define() {
+	set | grep "^$@ ()"
+}
+
+if ! define error >/dev/null; then
 	error() {
 		log "Обнаружена ошибка в тесте $0"
 	}
 fi
 
 
-if ! set | grep '^fix ()' >/dev/null; then
+if ! define fix >/dev/null; then
 	fix() {
 		return 1
 	}
 fi
 
-if ! set | grep '^fix_ok ()' >/dev/null; then
+if ! define fix_ok >/dev/null; then
 	fix_ok() {
 		log "Исправление удалось"
 	}
