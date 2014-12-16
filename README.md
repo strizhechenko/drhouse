@@ -12,6 +12,7 @@
 В конце вызывается слелующая конструкция:
 
 . /usr/local/lib/drhouse drhouse_main - если провал теста после починки должен уводить app в safemode
+
 . /usr/local/lib/drhouse drhouse_main_nosafemode - чтобы тест просто пытался починить проблему, не выйдет - и ладно
 
 ## Логика drhouse
