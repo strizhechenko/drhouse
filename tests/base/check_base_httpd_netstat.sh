@@ -13,4 +13,4 @@ fix() {
 	/etc/init.d/httpd restart	
 }
 
-. /app/base/usr/local/lib/drhouse drhouse_main_nosafemode
+. /app/base/usr/local/lib/angel main

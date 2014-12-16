@@ -8,4 +8,4 @@ error() {
 	[ "$count" != '0' -a "$count" -lt "1000000" ]
 }
 
-. /usr/local/lib/drhouse drhouse_main_nosafemode
+. /usr/local/lib/angel main

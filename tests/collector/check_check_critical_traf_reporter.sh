@@ -12,4 +12,4 @@ error() {
 	log "Критические ошибки в логе $logfile"
 }
 
-. /usr/local/lib/drhouse drhouse_main_nosafemode
+. /usr/local/lib/angel main

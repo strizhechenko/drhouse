@@ -8,4 +8,4 @@ error() {
 	log "Не настроены DNS"	
 }
 
-. /app/base/usr/local/lib/drhouse drhouse_main
+. /app/base/usr/local/lib/angel main_critical

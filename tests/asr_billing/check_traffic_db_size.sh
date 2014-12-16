@@ -9,4 +9,4 @@ error() {
 	log "Чрезмерно большая база данных трафика"
 }
 
-. /usr/local/lib/drhouse drhouse_main
+. /usr/local/lib/angel main_critical

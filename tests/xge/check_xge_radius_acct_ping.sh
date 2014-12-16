@@ -9,4 +9,4 @@ error() {
 	log "Сервер аккаунтинга ${radclient['acctserver']%%:*} недоступен"
 }
 
-. /usr/local/lib/drhouse drhouse_main_nosafemode
+. /usr/local/lib/angel main

@@ -9,4 +9,4 @@ error() {
 	log "Не слушает http-сервер XGE для неавторизованных"
 }
 
-. /usr/local/lib/drhouse drhouse_main
+. /usr/local/lib/angel main_critical

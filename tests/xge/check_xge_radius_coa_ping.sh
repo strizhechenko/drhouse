@@ -9,4 +9,4 @@ error() {
 	log "Radius-клиент (биллинг) ${radclient['coa_client.ip']%%:*} недоступен"
 }
 
-. /usr/local/lib/drhouse drhouse_main_nosafemode
+. /usr/local/lib/angel main

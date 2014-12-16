@@ -14,4 +14,4 @@ error() {
 	log "Слишком большое количество правил iptables"	
 }
 
-. /app/base/usr/local/lib/drhouse drhouse_main
+. /app/base/usr/local/lib/angel main_critical

@@ -9,4 +9,4 @@ error() {
 	log "Сервер авторизации ${radclient['authserver']%%:*} недоступен"
 }
 
-. /usr/local/lib/drhouse drhouse_main_nosafemode
+. /usr/local/lib/angel main

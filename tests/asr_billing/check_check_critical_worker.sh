@@ -9,4 +9,4 @@ error() {
 	log "Имеются критические ошибки в логе worker за последний час."
 }
 
-. /usr/local/lib/drhouse drhouse_main
+. /usr/local/lib/angel main_critical

@@ -27,13 +27,13 @@ if ! define fix_ok >/dev/null; then
 	}
 fi
 
-drhouse_main_nosafemode() {
+main() {
 	check && exit 0 || error
 	fix && fix_ok || exit 1
 	check && exit 0 || exit 2
 }
 
-drhouse_main() {
+main_critical() {
 	check && exit 0 || error
 	fix && fix_ok || exit 254
 	check && exit 0 || exit 254
