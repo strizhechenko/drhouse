@@ -11,4 +11,4 @@ error() {
 	log "Высокая нагрузка на CPU"	
 }
 
-. /app/base/usr/local/lib/drhouse drhouse_main
+. /app/base/usr/local/lib/drhouse drhouse_main_nosafemode
