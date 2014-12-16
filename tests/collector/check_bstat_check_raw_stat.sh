@@ -1,7 +1,7 @@
 #!/bin/bash
 
 check() {
-	[ $(find /var/stat/raw/ -type f | wc -l) != '0' ]
+	[ $(find /var/stat/raw/ -type f | wc -l) -le '1' ]
 }
 
 error() {
